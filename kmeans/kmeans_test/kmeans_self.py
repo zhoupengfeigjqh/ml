@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import random
-
+# 根据原理自己写代码来测试
 
 def distance(x, y):
     """ 计算两个向量之间的距离

@@ -1,7 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import mpl_finance as mf
-
+# 生成成交量K线
 
 def vol_rebuild(data=None, vtype="usd", threshold=10000):
     """按照成交量累积进行重构
