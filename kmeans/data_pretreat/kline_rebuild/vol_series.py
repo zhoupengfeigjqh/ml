@@ -94,7 +94,7 @@ if __name__ == "__main__":
 
     # 分两种方式研究，一种是累计q_usd，一种是累计q_btc
     # 设置 q_usd 累计阈值
-    q_usd_vol_threshold = 50000
+    q_usd_vol_threshold = 500000
 
     data = vol_rebuild(data=data, vtype="usd", threshold=q_usd_vol_threshold)
 

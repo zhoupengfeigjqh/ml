@@ -1,0 +1,2 @@
+kmeans_test：根据原理自己写模型来测试
+kmeans_scikit：利用工具包中的kmeans进行测试
