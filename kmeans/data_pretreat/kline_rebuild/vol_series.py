@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import mpl_finance as mf
 # 生成成交量K线
 
+
 def vol_rebuild(data=None, vtype="usd", threshold=10000):
     """按照成交量累积进行重构
     """
@@ -56,38 +57,41 @@ def vol_rebuild(data=None, vtype="usd", threshold=10000):
         return pd.DataFrame({"o": o, "h": h, "l": l, "c": c})
 
 
-if __name__ == "__main__":
+def load_data(f_names):
+    """读取数据
+    """
+    all_data = None
 
-    name = ["deribit_trade_perpetual.BTC.20191201.csv",
-            "deribit_trade_perpetual.BTC.20191202.csv",
-            "deribit_trade_perpetual.BTC.20191203.csv",
-            "deribit_trade_perpetual.BTC.20191204.csv",
-            "deribit_trade_perpetual.BTC.20191205.csv"]
+    for i in range(0, len(f_names)):
+        path = "C:\\Users\\DELL\\Desktop\\ml\\ml\\kmeans\\data_pretreat\\trade_data\\" + f_names[i]
 
-    data = None
-
-    for i in range(0, len(name)):
-        path = "C:\\Users\\DELL\\Desktop\\ml\\ml\\data_pretreat\\trade_data\\" + name[i]
-
-        if data is None:
-            print("Sss")
-            data = pd.read_csv(path, usecols=["p", "q", "a"])
+        if all_data is None:
+            all_data = pd.read_csv(path, usecols=["p", "q", "a"])
         else:
-            print("ttt")
             d = pd.read_csv(path, usecols=["p", "q", "a"])
-            data = pd.concat([data, d])
+            all_data = pd.concat([all_data, d])
 
-    data = data.reset_index()
-    print(data.describe())
-    print(data.info())
+    all_data = all_data.reset_index()
 
-    #
     # 修改列名，增加列。这里的数量单位包含USD和BTC
-    data.rename(columns={"q": "q_usd"}, inplace=True)
-    data["q_btc"] = round(data["q_usd"] / data["p"], 6)
+    all_data.rename(columns={"q": "q_usd"}, inplace=True)
+    all_data["q_btc"] = round(all_data["q_usd"] / all_data["p"], 6)
 
     # 调整顺序
-    data = data[["p", "q_usd", "q_btc", "a"]]
+    all_data = all_data[["p", "q_usd", "q_btc", "a"]]
+
+    return all_data
+
+
+if __name__ == "__main__":
+
+    file_names = ["deribit_trade_perpetual.BTC.20191201.csv",
+                  "deribit_trade_perpetual.BTC.20191202.csv",
+                  "deribit_trade_perpetual.BTC.20191203.csv",
+                  "deribit_trade_perpetual.BTC.20191204.csv",
+                  "deribit_trade_perpetual.BTC.20191205.csv"]
+
+    data = load_data(file_names)
 
     # 统计信息
     print(data.describe())
