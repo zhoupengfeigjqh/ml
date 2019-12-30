@@ -1,5 +1,5 @@
-import pandas as pd
 import numpy as np
+import pandas as pd
 from scipy import stats
 from sklearn import preprocessing
 import matplotlib.pyplot as plt
@@ -14,11 +14,38 @@ if __name__ == "__main__":
     from kline_rebuild import vol_series as vs
 
     # 读取数据
-    file_names = ["deribit_trade_perpetual.BTC.20191201.csv",
-                  "deribit_trade_perpetual.BTC.20191202.csv",
-                  "deribit_trade_perpetual.BTC.20191203.csv",
-                  "deribit_trade_perpetual.BTC.20191204.csv",
-                  "deribit_trade_perpetual.BTC.20191205.csv"]
+    file_names = [
+                    "deribit_trade_perpetual.BTC.20191201.csv",
+                    "deribit_trade_perpetual.BTC.20191202.csv",
+                    "deribit_trade_perpetual.BTC.20191203.csv",
+                    "deribit_trade_perpetual.BTC.20191204.csv",
+                    "deribit_trade_perpetual.BTC.20191205.csv",
+                    "deribit_trade_perpetual.BTC.20191206.csv",
+                    "deribit_trade_perpetual.BTC.20191207.csv",
+                    "deribit_trade_perpetual.BTC.20191208.csv",
+                    "deribit_trade_perpetual.BTC.20191209.csv",
+                    "deribit_trade_perpetual.BTC.20191210.csv",
+                    "deribit_trade_perpetual.BTC.20191211.csv",
+                    "deribit_trade_perpetual.BTC.20191212.csv",
+                    "deribit_trade_perpetual.BTC.20191213.csv",
+                    "deribit_trade_perpetual.BTC.20191214.csv",
+                    "deribit_trade_perpetual.BTC.20191215.csv",
+                    "deribit_trade_perpetual.BTC.20191216.csv",
+                    "deribit_trade_perpetual.BTC.20191217.csv",
+                    "deribit_trade_perpetual.BTC.20191218.csv",
+                    "deribit_trade_perpetual.BTC.20191219.csv",
+                    "deribit_trade_perpetual.BTC.20191220.csv",
+                    "deribit_trade_perpetual.BTC.20191221.csv",
+                    "deribit_trade_perpetual.BTC.20191222.csv",
+                    "deribit_trade_perpetual.BTC.20191223.csv",
+                    "deribit_trade_perpetual.BTC.20191224.csv",
+                    "deribit_trade_perpetual.BTC.20191225.csv",
+                    "deribit_trade_perpetual.BTC.20191226.csv",
+                    "deribit_trade_perpetual.BTC.20191227.csv",
+                    "deribit_trade_perpetual.BTC.20191228.csv",
+                    "deribit_trade_perpetual.BTC.20191229.csv"
+
+                  ]
 
     data = vs.load_data(file_names)
     print(data.describe())
@@ -29,7 +56,7 @@ if __name__ == "__main__":
     data = vs.vol_rebuild(data=data, vtype="usd", threshold=q_usd_vol_threshold)
 
     # 计算过去k根K线的平均波动率和涨跌幅，用这两个特征进行聚类
-    k = 15
+    k = 10
     v = round((data["h"] - data["l"]) / data["l"], 6)
     data["avg_volt_per"] = v.rolling(window=k, min_periods=0).mean()
 
@@ -68,7 +95,7 @@ if __name__ == "__main__":
     # volt_per正态性检验
     print(stats.kstest(data["avg_volt_per"], "norm"))
 
-    # 二元关系 相关性检验
+    # 相关性检验
     print(data["avg_volt_per"].corr(data["chg_per"], method="pearson"))
 
     # 标准化
@@ -85,7 +112,7 @@ if __name__ == "__main__":
     # print(d)
     # # # 涨跌进行聚类
     # inertia_list = []
-    # for i in range(2, 10):
+    # for i in range(2, 8):
     #     km = KMeans(n_clusters=i, n_init=10)
     #     km.fit(d)
     #
@@ -98,7 +125,7 @@ if __name__ == "__main__":
     # plt.plot(inertia_list)
     # plt.show()
 
-    km = KMeans(n_clusters=4, n_init=10)
+    km = KMeans(n_clusters=5, n_init=10)
     km.fit(d)
 
     print("*******样本中心*********")
@@ -113,15 +140,50 @@ if __name__ == "__main__":
     print("*******最大迭代数*********")
     print(km.n_iter_)
 
+    # 画图颜色映射
+    map_colors = {0: "g", 1: "r", 2: "y", 3: "b", 4: "k"}
+
+    # 画分类图
     f1 = plt.figure(1)
     plt.title("test scikit_learn kmeans")
-    plt.xlabel("dimension_1")
-    plt.ylabel("dimension_2")
-    plt.scatter(x1, x2, marker='o', color='g', s=1)
-    plt.scatter(km.cluster_centers_[:, 0], km.cluster_centers_[:, 1], marker='o', color='r', s=200)
-    m, n = np.shape(d)
+    plt.xlabel("chg_per")
+    plt.ylabel("volt_per")
+    for i in range(0, max(km.labels_) + 1):
+        plt.scatter(x1[km.labels_ == i], x2[km.labels_ == i], marker='o', color=map_colors[i], s=0.8)
+    # plt.scatter(km.cluster_centers_[:, 0], km.cluster_centers_[:, 1], marker='o', color='r', s=200)
+    # m, n = np.shape(d)
     # for i in range(m):
     #     plt.plot([d[i, 0], km.cluster_centers_[km.labels_[i], 0]], [d[i, 1], km.cluster_centers_[km.labels_[i], 1]],
     #              "c--", linewidth=0.3)
     plt.show()
+    #
+    # # 画K线状态序列图
+    f1 = plt.figure(2)
+    plt.title("status sequence")
+    data["status"] = np.array(km.labels_)
+    for i in range(0, max(km.labels_) + 1):
+        plt.scatter(data[data["status"] == i].loc[0:3000].index, data[data["status"] == i]["c"].loc[0:3000],
+                    color=map_colors[i], marker="o", s=2)
+    plt.show()
+
+    # 状态转移概率分析
+    for j in range(1, 5):
+        print("***********************")
+        print("j: ", j)
+        d = {}
+        for i in range(0, max(km.labels_) + 1):
+            sel_ids = data[data["status"] == i].index
+            sel_ids = sel_ids[0:-j]
+            # print("status-1: ", i)
+            # d.append(data["status"][sel_ids + j].value_counts())
+            d[i] = data["status"][sel_ids + j].value_counts()
+        fdata = pd.DataFrame(d)
+        fdata = fdata.sort_index()
+        print(fdata)
+        print(fdata.sum())
+        print(fdata / fdata.sum())
+
+
+
+
 
