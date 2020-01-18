@@ -10,7 +10,7 @@ import sys
 if __name__ == "__main__":
     """行情聚类计算
     """
-    sys.path.append(r"C://Users//DELL//Desktop//ml//ml//kmeans//data_pretreat")
+    sys.path.append(r"C://Users//DELL//Desktop//ml//ml//kmeans//data")
     from kline_rebuild import vol_series as vs
 
     # 读取数据
@@ -140,10 +140,15 @@ if __name__ == "__main__":
     print("*******最大迭代数*********")
     print(km.n_iter_)
 
-    # 画图颜色映射
+    # 聚类分布图 5类
+    r1 = pd.Series(km.labels_).value_counts()
+    plt.bar([0, 1, 2, 3, 4], r1)
+    plt.show()
+
+    # 画图颜色映射 5类
     map_colors = {0: "g", 1: "r", 2: "y", 3: "b", 4: "k"}
 
-    # 画分类图
+    # 画分类图 5类
     f1 = plt.figure(1)
     plt.title("test scikit_learn kmeans")
     plt.xlabel("chg_per")
