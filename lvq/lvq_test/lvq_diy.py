@@ -110,7 +110,7 @@ if __name__ == "__main__":
     print(categories)
 
     f1 = plt.figure(1)
-    plt.title("test kmeans")
+    plt.title("test lvq")
     plt.xlabel("dimension_1")
     plt.ylabel("dimension_2")
     plt.scatter(d[:, 0], d[:, 1], marker='o', color='g', s=50)
