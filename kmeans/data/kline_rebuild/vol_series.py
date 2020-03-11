@@ -63,7 +63,7 @@ def load_data(f_names):
     all_data = None
 
     for i in range(0, len(f_names)):
-        path = "C:\\Users\\DELL\\Desktop\\ml\\ml\\kmeans\\data_pretreat\\trade_data\\" + f_names[i]
+        path = "C:\\Users\\DELL\\Desktop\\ml\\ml\\kmeans\\data\\trade_data\\" + f_names[i]
 
         if all_data is None:
             all_data = pd.read_csv(path, usecols=["p", "q", "a"])
