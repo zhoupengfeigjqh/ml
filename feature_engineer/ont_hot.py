@@ -1,5 +1,4 @@
 # -*- coding:utf-8 -*-
-# 目的：不因变量值表示问题对预测产生负面影响
 
 from sklearn import preprocessing
 
