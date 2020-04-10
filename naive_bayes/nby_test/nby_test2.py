@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 """naive bayes test
-   基于sklearn实现
+   基于sklearn实现 多项式和伯努利朴素贝叶斯
 """
 
 import numpy as np
