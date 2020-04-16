@@ -1,8 +1,10 @@
 # -*- coding:utf-8 -*-
+"""
+   手写模型，实现一个简单的分类
+"""
 import numpy as np
 import matplotlib.pyplot as plt
 import random
-# 根据原理自己写代码来测试
 
 
 def distance(x, y):

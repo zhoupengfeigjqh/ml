@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
-"""scikit learn逻辑斯蒂回归
+"""
+   利用sklearn，实现一个简单的分类
 """
 import numpy as np
 from sklearn.linear_model import LogisticRegression

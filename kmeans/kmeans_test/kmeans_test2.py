@@ -1,8 +1,10 @@
 # -*- coding:utf-8 -*-
+"""
+   利用sklearn，实现一个简单的分类
+"""
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
-# 利用sklearn工具包进行测试练习
 
 if __name__ == "__main__":
     print("sss")
