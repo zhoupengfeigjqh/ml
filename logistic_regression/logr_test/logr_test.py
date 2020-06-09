@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 """
-   利用sklearn，实现一个简单的分类
+   利用sklearn LogisticRegressio, 实现一个简单的分类
 """
 import numpy as np
 from sklearn.linear_model import LogisticRegression

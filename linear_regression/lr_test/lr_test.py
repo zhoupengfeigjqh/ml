@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 """
-   利用sklearn，实现一个简单的回归
+   利用sklearn LinearRegression, 实现一个简单的回归
 """
 from sklearn import linear_model
 import numpy as np

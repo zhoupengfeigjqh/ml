@@ -1,3 +1,7 @@
+# -*- coding:utf-8 -*-
+"""
+   利用sklearn DecisionTreeClassifier, 实现一个简单分类决策树
+"""
 from sklearn.datasets import load_iris
 # from sklearn.model_selection import cross_val_score
 from sklearn.tree import DecisionTreeClassifier

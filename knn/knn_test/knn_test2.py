@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 """
-  利用sklearn实现实现一个简单的分类
+  利用sklearn KNeighborsClassifier, 实现实现一个简单的分类
 """
 import numpy as np
 from sklearn import preprocessing
