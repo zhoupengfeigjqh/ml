@@ -29,7 +29,7 @@ def initial_data(n=3600):
     y = np.array(y)
     x.transpose()
 
-    plt.figure(1)a
+    plt.figure(1)
     plt.scatter(x[y == 1].transpose()[0], x[y == 1].transpose()[1], marker="o", c="b")
     plt.scatter(x[y == -1].transpose()[0], x[y == -1].transpose()[1], marker="o", c="g")
 
